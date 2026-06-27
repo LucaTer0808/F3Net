@@ -26,7 +26,7 @@ class Test(object):
         ## dataset
         self.cfg    = Dataset.Config(datapath=path, snapshot='./out/model-32', mode='test')
         self.data   = Dataset.Data(self.cfg)
-        self.loader = DataLoader(self.data, batch_size=1, shuffle=False, num_workers=8)
+        self.loader = DataLoader(self.data, batch_size=1, shuffle=False, num_workers=4)
         ## network
         self.net    = Network(self.cfg)
         self.net.train(False)
@@ -63,7 +63,7 @@ class Test(object):
                 head  = '/scratch/tmp/lterfehr/models/F3Net/eval/maps/F3Net/dataset'
                 if not os.path.exists(head):
                     os.makedirs(head)
-                cv2.imwrite(head+'/'+name[0]+'.png', np.round(pred))
+                cv2.imwrite(head+'/'+name[0]+'.png', np.round(pred).astype(np.uint8))
 
         torch.cuda.synchronize()
         end_time = time.time()
