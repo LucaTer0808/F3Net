@@ -79,11 +79,21 @@ class Data(Dataset):
         self.randomflip = RandomFlip()
         self.resize     = Resize(352, 352)
         self.totensor   = ToTensor()
+        self.samples = []
+        self.postfix = '.jpg'
 
+        image_paths = self.cfg.datapath+'/image/'
+        for filename in os.listdir(image_paths):
+            if filename.endswith('.jpg') or filename.endswith('.png'):
+                if filename.endswith('.jpg'):
+                    self.postfix = '.jpg'
+                else:
+                    self.postfix = '.png'
+                self.samples.append(filename[:-4])
 
     def __getitem__(self, idx):
         name  = self.samples[idx]
-        image = cv2.imread(self.cfg.datapath+'/image/'+name+'.jpg')[:,:,::-1].astype(np.float32)
+        image = cv2.imread(self.cfg.datapath+'/image/'+name+self.postfix)[:,:,::-1].astype(np.float32)
         mask  = cv2.imread(self.cfg.datapath+'/mask/' +name+'.png', 0).astype(np.float32)
         shape = mask.shape
 
