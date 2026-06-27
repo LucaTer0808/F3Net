@@ -4,6 +4,7 @@
 *$py.class
 .venv/
 out/
+data/
 
 # C extensions
 *.so
