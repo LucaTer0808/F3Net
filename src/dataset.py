@@ -79,10 +79,7 @@ class Data(Dataset):
         self.randomflip = RandomFlip()
         self.resize     = Resize(352, 352)
         self.totensor   = ToTensor()
-        with open(cfg.datapath+'/'+cfg.mode+'.txt', 'r') as lines:
-            self.samples = []
-            for line in lines:
-                self.samples.append(line.strip())
+
 
     def __getitem__(self, idx):
         name  = self.samples[idx]
