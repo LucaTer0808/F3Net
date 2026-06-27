@@ -3,6 +3,7 @@
 
 import os
 import sys
+import time
 sys.path.insert(0, '../')
 sys.dont_write_bytecode = True
 
@@ -50,6 +51,9 @@ class Test(object):
                 input()
     
     def save(self):
+        torch.cuda.synchronize()
+        start_time = time.time()
+
         with torch.no_grad():
             for image, mask, shape, name in self.loader:
                 image = image.cuda().float()
@@ -61,9 +65,21 @@ class Test(object):
                     os.makedirs(head)
                 cv2.imwrite(head+'/'+name[0]+'.png', np.round(pred))
 
+        torch.cuda.synchronize()
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        images_processed = len(self.loader.dataset)
+        time_per_image = total_time / images_processed if images_processed > 0 else 0
+
+        with open(head + '/evaluation.txt', 'w') as f:
+            f.write(f'Total time: {total_time:.4f} seconds\n')
+            f.write(f'Images processed: {images_processed}\n')
+            f.write(f'Time per image: {time_per_image:.4f} seconds\n')
+
 
 if __name__=='__main__':
-    for path in ['../data/ECSSD', '../data/PASCAL-S', '../data/DUTS', '../data/HKU-IS', '../data/DUT-OMRON']:
+    for path in ['../data/dataset']:
         t = Test(dataset, F3Net, path)
         t.save()
         # t.show()
