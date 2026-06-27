@@ -79,7 +79,6 @@ class Test(object):
 
 
 if __name__=='__main__':
-    for path in ['../data/dataset']:
-        t = Test(dataset, F3Net, path)
-        t.save()
-        # t.show()
+    t = Test(dataset, F3Net, '../data/dataset')
+    t.save()
+
