@@ -93,8 +93,8 @@ class Data(Dataset):
 
     def __getitem__(self, idx):
         name  = self.samples[idx]
-        image = cv2.imread(self.cfg.datapath+'/image/'+name+self.postfix)[:,:,::-1].astype(np.float32)
-        mask  = cv2.imread(self.cfg.datapath+'/mask/' +name+'.png', 0).astype(np.float32)
+        image = cv2.imread('/scratch/tmp/lterfehr/models/F3Net/data/dataset' + '/image/' + name+self.postfix)[:,:,::-1].astype(np.float32)
+        mask  = cv2.imread('/scratch/tmp/lterfehr/models/F3Net/data/dataset' + '/mask/' + name+'.png', 0).astype(np.float32)
         shape = mask.shape
 
         if self.cfg.mode=='train':
