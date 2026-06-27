@@ -82,7 +82,7 @@ class Data(Dataset):
         self.samples = []
         self.postfix = '.jpg'
 
-        image_paths = self.cfg.datapath+'/image/'
+        image_paths = '/scratch/tmp/lterfehr/models/F3Net/data/dataset/image'
         for filename in os.listdir(image_paths):
             if filename.endswith('.jpg') or filename.endswith('.png'):
                 if filename.endswith('.jpg'):
