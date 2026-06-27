@@ -60,7 +60,7 @@ class Test(object):
                 out1u, out2u, out2r, out3r, out4r, out5r = self.net(image, shape)
                 out   = out2u
                 pred  = (torch.sigmoid(out[0,0])*255).cpu().numpy()
-                head  = '/scratch/tmp/lterfehr/models/F3Net/eval/maps/F3Net/'+ self.cfg.datapath.split('/')[-1]
+                head  = '/scratch/tmp/lterfehr/models/F3Net/eval/maps/F3Net/dataset'
                 if not os.path.exists(head):
                     os.makedirs(head)
                 cv2.imwrite(head+'/'+name[0]+'.png', np.round(pred))
